@@ -11,7 +11,16 @@ class ModelClient:
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             temperature=temperature,
-            max_tokens=500
+            max_tokens=500,
         )
+        # Handle both standard OpenAI SDK response objects and raw dict/str responses
+        if isinstance(response, str):
+            return response
+        if isinstance(response, dict):
+            choices = response.get("choices", [])
+            if choices:
+                msg = choices[0].get("message", {})
+                return msg.get("content", "") or ""
+            return ""
         content = response.choices[0].message.content
         return content or ""
