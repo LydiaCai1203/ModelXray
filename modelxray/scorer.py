@@ -39,6 +39,37 @@ def score_probe(probe: dict, response: str) -> ProbeResult:
     return result
 
 
+def score_token_probe(probe: dict, response: str, usage: dict) -> ProbeResult:
+    """Score a token_count probe using prompt_tokens from API usage data."""
+    prompt_tokens = usage.get("prompt_tokens")
+    result = ProbeResult(
+        probe_id=probe["id"],
+        response=response,
+        category=probe.get("category", ""),
+    )
+    if prompt_tokens is None:
+        # No usage data — can't score, leave scores empty
+        return result
+    for model_id, expected in probe.get("expected", {}).items():
+        result.scores[model_id] = _eval_token_range(expected, prompt_tokens)
+    result.response = f"prompt_tokens={prompt_tokens}"
+    return result
+
+
+def _eval_token_range(expected: dict | list, prompt_tokens: int) -> float:
+    """Evaluate whether prompt_tokens falls within expected token_range [min, max]."""
+    if isinstance(expected, dict):
+        token_range = expected.get("token_range")
+    elif isinstance(expected, list) and len(expected) == 2:
+        token_range = expected
+    else:
+        return 0.0
+    if not token_range or len(token_range) != 2:
+        return 0.0
+    lo, hi = token_range
+    return 1.0 if lo <= prompt_tokens <= hi else 0.0
+
+
 # Canonical family tokens extracted from model names
 _FAMILY_TOKENS = {
     "gpt", "claude", "gemini", "llama", "qwen", "deepseek", "mistral",

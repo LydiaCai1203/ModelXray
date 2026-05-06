@@ -10,6 +10,16 @@ class BaseClient(ABC):
     def query(self, prompt: str, temperature: float = 0) -> str:
         ...
 
+    def query_with_usage(self, prompt: str, temperature: float = 0) -> tuple[str, dict]:
+        """Query and return (content, usage_dict).
+
+        usage_dict has keys: prompt_tokens, completion_tokens, total_tokens.
+        Subclasses may override for native usage support.
+        Returns empty usage dict if not available.
+        """
+        content = self.query(prompt, temperature)
+        return content, {}
+
     def _check_html(self, content: str) -> str:
         """Detect HTML responses (gateway/proxy errors)."""
         stripped = content.strip().lower()
@@ -47,15 +57,31 @@ class OpenAIChatClient(BaseClient):
         self.client = OpenAI(base_url=_ensure_v1(base_url), api_key=api_key)
         self.model = model
 
-    def query(self, prompt: str, temperature: float = 0) -> str:
-        response = self.client.chat.completions.create(
+    def _call(self, prompt: str, temperature: float = 0):
+        return self.client.chat.completions.create(
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             temperature=temperature,
             max_tokens=500,
         )
+
+    def query(self, prompt: str, temperature: float = 0) -> str:
+        response = self._call(prompt, temperature)
         content = _extract_chat_content(response)
         return self._check_html(content)
+
+    def query_with_usage(self, prompt: str, temperature: float = 0) -> tuple[str, dict]:
+        response = self._call(prompt, temperature)
+        content = _extract_chat_content(response)
+        content = self._check_html(content)
+        usage = {}
+        if hasattr(response, "usage") and response.usage:
+            usage = {
+                "prompt_tokens": response.usage.prompt_tokens,
+                "completion_tokens": response.usage.completion_tokens,
+                "total_tokens": response.usage.total_tokens,
+            }
+        return content, usage
 
 
 class OpenAIResponsesClient(BaseClient):
@@ -65,15 +91,31 @@ class OpenAIResponsesClient(BaseClient):
         self.client = OpenAI(base_url=_ensure_v1(base_url), api_key=api_key)
         self.model = model
 
-    def query(self, prompt: str, temperature: float = 0) -> str:
-        response = self.client.responses.create(
+    def _call(self, prompt: str, temperature: float = 0):
+        return self.client.responses.create(
             model=self.model,
             input=prompt,
             temperature=temperature,
             max_output_tokens=500,
         )
+
+    def query(self, prompt: str, temperature: float = 0) -> str:
+        response = self._call(prompt, temperature)
         content = response.output_text or ""
         return self._check_html(content)
+
+    def query_with_usage(self, prompt: str, temperature: float = 0) -> tuple[str, dict]:
+        response = self._call(prompt, temperature)
+        content = response.output_text or ""
+        content = self._check_html(content)
+        usage = {}
+        if hasattr(response, "usage") and response.usage:
+            usage = {
+                "prompt_tokens": response.usage.input_tokens,
+                "completion_tokens": response.usage.output_tokens,
+                "total_tokens": (response.usage.input_tokens or 0) + (response.usage.output_tokens or 0),
+            }
+        return content, usage
 
 
 class AnthropicClient(BaseClient):
@@ -90,15 +132,31 @@ class AnthropicClient(BaseClient):
         self.client = anthropic.Anthropic(**kwargs)
         self.model = model
 
-    def query(self, prompt: str, temperature: float = 0) -> str:
-        response = self.client.messages.create(
+    def _call(self, prompt: str, temperature: float = 0):
+        return self.client.messages.create(
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             temperature=temperature,
             max_tokens=500,
         )
+
+    def query(self, prompt: str, temperature: float = 0) -> str:
+        response = self._call(prompt, temperature)
         content = response.content[0].text if response.content else ""
         return self._check_html(content)
+
+    def query_with_usage(self, prompt: str, temperature: float = 0) -> tuple[str, dict]:
+        response = self._call(prompt, temperature)
+        content = response.content[0].text if response.content else ""
+        content = self._check_html(content)
+        usage = {}
+        if hasattr(response, "usage") and response.usage:
+            usage = {
+                "prompt_tokens": response.usage.input_tokens,
+                "completion_tokens": response.usage.output_tokens,
+                "total_tokens": (response.usage.input_tokens or 0) + (response.usage.output_tokens or 0),
+            }
+        return content, usage
 
 
 _API_TYPES = {

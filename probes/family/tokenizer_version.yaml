@@ -1,0 +1,139 @@
+# Tokenizer version fingerprint probes
+# These detect tokenizer generation differences via token counting (usage.prompt_tokens)
+# and fallback Unicode-splitting behavior tests.
+#
+# Key insight: Claude Opus 4.7 uses a newer tokenizer that consumes 1.0–1.35x more
+# tokens than 4.6 for the same input. This is the most reliable covert discriminator
+# between model versions sharing the same family.
+
+# === Token count probes (type: token_count) ===
+# These require API usage data. The probe sends a fixed-length text and checks
+# whether prompt_tokens falls within the expected range for each model version.
+
+- id: tok_version_chinese
+  category: tokenizer
+  type: token_count
+  weight: 2.2
+  prompt: "请简要回答：以下这段文字有什么特点？「天地玄黄，宇宙洪荒。日月盈昃，辰宿列张。寒来暑往，秋收冬藏。闰余成岁，律吕调阳。云腾致雨，露结为霜。金生丽水，玉出昆冈。」"
+  expected:
+    claude-opus-4-6:
+      token_range: [80, 120]
+    claude-opus-4-7:
+      token_range: [100, 160]
+    claude-sonnet-4-6:
+      token_range: [80, 120]
+    claude-sonnet-4-7:
+      token_range: [100, 160]
+    gpt-4o:
+      token_range: [60, 100]
+    gpt-4o-mini:
+      token_range: [60, 100]
+    deepseek-v3:
+      token_range: [50, 90]
+    deepseek-r1:
+      token_range: [50, 90]
+    kimi-k2.5:
+      token_range: [55, 95]
+    kimi-k2.6:
+      token_range: [55, 95]
+
+- id: tok_version_code
+  category: tokenizer
+  type: token_count
+  weight: 2.2
+  prompt: "Explain this code briefly:\n```python\ndef fibonacci(n: int) -> list[int]:\n    if n <= 0:\n        return []\n    sequence = [0, 1]\n    while len(sequence) < n:\n        sequence.append(sequence[-1] + sequence[-2])\n    return sequence[:n]\n\nresult = fibonacci(20)\nprint(f'First 20 Fibonacci numbers: {result}')\n```"
+  expected:
+    claude-opus-4-6:
+      token_range: [85, 130]
+    claude-opus-4-7:
+      token_range: [110, 175]
+    claude-sonnet-4-6:
+      token_range: [85, 130]
+    claude-sonnet-4-7:
+      token_range: [110, 175]
+    gpt-4o:
+      token_range: [70, 110]
+    gpt-4o-mini:
+      token_range: [70, 110]
+    deepseek-v3:
+      token_range: [65, 105]
+    deepseek-r1:
+      token_range: [65, 105]
+    kimi-k2.5:
+      token_range: [70, 110]
+    kimi-k2.6:
+      token_range: [70, 110]
+
+- id: tok_version_mixed
+  category: tokenizer
+  type: token_count
+  weight: 2.0
+  prompt: "What language patterns appear here? 「Hello世界！🌍 café naïve résumé Ñoño θ∈Ω ∀x∃y ℝ→ℂ α≤β≤γ 你好👋🏻」"
+  expected:
+    claude-opus-4-6:
+      token_range: [45, 75]
+    claude-opus-4-7:
+      token_range: [55, 100]
+    claude-sonnet-4-6:
+      token_range: [45, 75]
+    claude-sonnet-4-7:
+      token_range: [55, 100]
+    gpt-4o:
+      token_range: [40, 70]
+    gpt-4o-mini:
+      token_range: [40, 70]
+    deepseek-v3:
+      token_range: [35, 65]
+    deepseek-r1:
+      token_range: [35, 65]
+    kimi-k2.5:
+      token_range: [38, 68]
+    kimi-k2.6:
+      token_range: [38, 68]
+
+# === Fallback content-based probes ===
+# These work even without usage data, testing how models handle rare Unicode
+# combinations that reveal tokenizer split boundaries.
+
+- id: tok_version_unicode_split
+  category: tokenizer
+  weight: 1.8
+  prompt: "Split this string into individual characters, separated by spaces: 'ﬁ㍻﷽'"
+  expected:
+    claude-opus-4-6:
+      # Older tokenizer may handle ligatures differently
+      pattern: '(f\s*i|ﬁ)'
+    claude-opus-4-7:
+      # Newer tokenizer treats ﬁ as single unit more consistently
+      contains: ["ﬁ"]
+    claude-sonnet-4-6:
+      pattern: '(f\s*i|ﬁ)'
+    claude-sonnet-4-7:
+      contains: ["ﬁ"]
+    gpt-4o:
+      pattern: '(f\s*i|ﬁ)'
+    gpt-4o-mini:
+      pattern: '(f\s*i|ﬁ)'
+
+- id: tok_version_zwj_handling
+  category: tokenizer
+  weight: 1.6
+  prompt: "How many visible characters (grapheme clusters) are in this string? Reply with just the number: '👨‍👩‍👧‍👦🇯🇵'"
+  expected:
+    # ZWJ family emoji + flag: tests grapheme awareness
+    claude-opus-4-6:
+      pattern: '(2|5|7|8)'
+    claude-opus-4-7:
+      contains: ["2"]
+    claude-sonnet-4-6:
+      pattern: '(2|5|7|8)'
+    claude-sonnet-4-7:
+      contains: ["2"]
+    gpt-4o:
+      contains: ["2"]
+    gpt-4o-mini:
+      pattern: '(2|7|8)'
+    claude-3-5-sonnet:
+      pattern: '(2|7|8)'
+    claude-sonnet-4:
+      pattern: '(2|5|7|8)'
