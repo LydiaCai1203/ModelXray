@@ -13,14 +13,39 @@ pip install -e .
 ## Usage
 
 ```bash
-modelxray --base-url https://api.openai.com/v1 --api-key sk-xxx --model gpt-4o
+modelxray --base-url https://api.openai.com --api-key sk-xxx --model gpt-4o
 ```
 
 Quick mode (fewer probes, faster):
 
 ```bash
-modelxray --base-url https://your-relay.com/v1 --api-key sk-xxx --model gpt-4o --mode quick
+modelxray --base-url https://your-relay.com --api-key sk-xxx --model gpt-4o --mode quick
 ```
+
+## API Types
+
+Use `--api-type` (`-t`) to select the API protocol. Default is `openai-chat`.
+
+| Type | SDK | Use for |
+|------|-----|---------|
+| `openai-chat` | OpenAI `chat.completions` | OpenAI, Azure, most relay providers |
+| `openai-responses` | OpenAI `responses` | OpenAI Responses API |
+| `anthropic` | Anthropic `messages` | Anthropic Claude models |
+
+Examples:
+
+```bash
+# OpenAI Chat Completions (default)
+modelxray -b https://api.openai.com -k sk-xxx -m gpt-4o
+
+# OpenAI Responses API
+modelxray -t openai-responses -b https://api.openai.com -k sk-xxx -m gpt-4o
+
+# Anthropic
+modelxray -t anthropic -b https://api.anthropic.com -k sk-ant-xxx -m claude-sonnet-4-6
+```
+
+> `/v1` is auto-appended for `openai-chat` and `openai-responses` if missing. For `anthropic`, the SDK manages the endpoint automatically.
 
 ## How it works
 
@@ -56,7 +81,7 @@ Probes run: 20
 
 ## Supported models
 
-GPT-3.5-turbo, GPT-4o, GPT-4o-mini, Claude 3 Opus, Claude 3.5 Sonnet, Gemini 1.5 Pro, Gemini 2.0 Flash, Llama 3 (8B/70B), Qwen (7B/72B), DeepSeek V3/R1, Mistral 7B.
+GPT-3.5-turbo, GPT-4o, GPT-4o-mini, Claude 3 Opus, Claude 3.5 Sonnet, Claude Sonnet 4, Gemini 1.5 Pro, Gemini 2.0 Flash, Llama 3 (8B/70B), Qwen (7B/72B), DeepSeek V3/R1, Kimi K2.5/K2.6, Mistral 7B.
 
 ## Cost
 
