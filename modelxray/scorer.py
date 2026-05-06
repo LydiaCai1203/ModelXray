@@ -7,6 +7,7 @@ class ProbeResult:
     probe_id: str
     response: str
     scores: dict[str, float] = field(default_factory=dict)  # model_id -> score 0..1
+    category: str = ""
 
 
 def _eval_expected(expected: dict | str, response: str) -> float:
@@ -28,7 +29,11 @@ def _eval_expected(expected: dict | str, response: str) -> float:
 
 
 def score_probe(probe: dict, response: str) -> ProbeResult:
-    result = ProbeResult(probe_id=probe["id"], response=response)
+    result = ProbeResult(
+        probe_id=probe["id"],
+        response=response,
+        category=probe.get("category", ""),
+    )
     for model_id, expected in probe.get("expected", {}).items():
         result.scores[model_id] = _eval_expected(expected, response)
     return result
