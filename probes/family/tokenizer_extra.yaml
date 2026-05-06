@@ -1,0 +1,27 @@
+# Tokenizer edge case: counting specific characters
+# This probe is highly discriminative because it tests character-level processing
+
+- id: tok_word_length
+  category: tokenizer
+  weight: 2.0
+  prompt: 'How many characters are in the word "authentication"? Reply with just the number.'
+  expected:
+    gpt-3.5-turbo:
+      contains: ["14"]
+    gpt-4o:
+      contains: ["14"]
+    gpt-4o-mini:
+      contains: ["14"]
+    claude-3-5-sonnet:
+      contains: ["14"]
+    claude-3-opus:
+      contains: ["14"]
+    gemini-1.5-pro:
+      contains: ["14"]
+    llama-3-70b:
+      contains: ["14"]
+    # Weaker/smaller models sometimes miscount
+    llama-3-8b:
+      pattern: '(14|13|15)'
+    qwen-7b:
+      pattern: '(14|13|15)'

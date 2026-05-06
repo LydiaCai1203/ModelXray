@@ -1,0 +1,63 @@
+# Behavioral fingerprint probes
+
+- id: behavior_list_format
+  category: behavior
+  weight: 1.8
+  prompt: 'List 3 benefits of exercise. Be brief.'
+  expected:
+    claude-3-5-sonnet:
+      pattern: '(\*\*|1\.)'
+    claude-3-opus:
+      pattern: '(\*\*|1\.)'
+    gpt-4o:
+      pattern: '1\.'
+    gpt-4o-mini:
+      pattern: '1\.'
+    gemini-1.5-pro:
+      pattern: '(-|\*) '
+    gemini-2.0-flash:
+      pattern: '(-|\*) '
+
+- id: behavior_verbosity
+  category: behavior
+  weight: 1.5
+  prompt: 'What is 2+2?'
+  expected:
+    gpt-3.5-turbo:
+      contains: ['4']
+    gpt-4o:
+      contains: ['4']
+    claude-3-5-sonnet:
+      contains: ['4']
+    llama-3-70b:
+      pattern: '(answer is|= 4|equals 4)'
+
+- id: behavior_code_style
+  category: behavior
+  weight: 1.6
+  prompt: 'Write a Python function to check if a number is prime. Just the function, no explanation.'
+  expected:
+    claude-3-5-sonnet:
+      pattern: '(def is_prime\(n: int\)|-> bool)'
+    claude-3-opus:
+      pattern: '(def is_prime\(n: int\)|-> bool)'
+    gpt-4o:
+      pattern: 'def is_prime'
+    gpt-4o-mini:
+      pattern: 'def is_prime'
+    gpt-3.5-turbo:
+      pattern: 'def is_prime'
+
+- id: behavior_markdown_in_response
+  category: behavior
+  weight: 1.4
+  prompt: 'Explain what an API is in one sentence.'
+  expected:
+    claude-3-5-sonnet:
+      not_contains: ['**', '##', '```']
+    claude-3-opus:
+      not_contains: ['**', '##']
+    gpt-4o:
+      not_contains: ['##', '```']
+    gpt-4o-mini:
+      not_contains: ['##']

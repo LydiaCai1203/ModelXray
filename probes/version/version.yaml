@@ -1,0 +1,83 @@
+# Version discrimination probes
+
+- id: version_math_precision
+  category: version
+  weight: 2.0
+  prompt: 'What is the result of 9.11 compared to 9.9? Which is larger? Reply with just the larger number.'
+  expected:
+    gpt-3.5-turbo:
+      contains: ["9.11"]
+    gpt-4o:
+      contains: ["9.9"]
+    gpt-4o-mini:
+      contains: ["9.9"]
+    claude-3-5-sonnet:
+      contains: ["9.9"]
+    claude-3-opus:
+      contains: ["9.9"]
+    gemini-1.5-pro:
+      contains: ["9.9"]
+    llama-3-70b:
+      contains: ["9.9"]
+    llama-3-8b:
+      contains: ["9.11"]
+
+- id: version_context_window_awareness
+  category: version
+  weight: 1.8
+  prompt: 'What is your context window size? Give a specific number if you know it.'
+  expected:
+    gpt-3.5-turbo:
+      pattern: '(4k|4,096|16k|16,385)'
+    gpt-4o:
+      pattern: '(128k|128,000)'
+    gpt-4o-mini:
+      pattern: '(128k|128,000)'
+    claude-3-5-sonnet:
+      pattern: '(200k|200,000)'
+    claude-3-opus:
+      pattern: '(200k|200,000)'
+    gemini-1.5-pro:
+      pattern: '(1M|1,000,000|1 million)'
+    gemini-2.0-flash:
+      pattern: '(1M|1,000,000)'
+
+- id: version_reasoning_depth
+  category: version
+  weight: 2.2
+  prompt: 'A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost? Reply with just the price in cents.'
+  expected:
+    gpt-3.5-turbo:
+      contains: ["10"]
+    gpt-4o:
+      contains: ["5"]
+    gpt-4o-mini:
+      contains: ["5"]
+    claude-3-5-sonnet:
+      contains: ["5"]
+    claude-3-opus:
+      contains: ["5"]
+    gemini-1.5-pro:
+      contains: ["5"]
+    llama-3-8b:
+      contains: ["10"]
+    llama-3-70b:
+      contains: ["5"]
+    qwen-7b:
+      contains: ["10"]
+    qwen-72b:
+      contains: ["5"]
+
+- id: version_instruction_following
+  category: version
+  weight: 1.9
+  prompt: 'Reply with exactly 3 words. No more, no less. Confirm you understand.'
+  expected:
+    gpt-4o:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    claude-3-5-sonnet:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    gpt-4o-mini:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    gpt-3.5-turbo:
+      pattern: '.'

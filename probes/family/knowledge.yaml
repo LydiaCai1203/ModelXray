@@ -1,0 +1,81 @@
+# Knowledge cutoff and self-awareness probes
+
+- id: knowledge_cutoff_self_report
+  category: knowledge
+  weight: 1.6
+  prompt: 'What is your training data cutoff date? Reply with just the month and year, e.g. April 2024.'
+  expected:
+    gpt-3.5-turbo:
+      pattern: '(January 2022|September 2021)'
+    gpt-4o:
+      pattern: '(October 2023|April 2024)'
+    gpt-4o-mini:
+      pattern: '(October 2023|July 2025)'
+    claude-3-5-sonnet:
+      pattern: '(April 2024|early 2024)'
+    claude-3-opus:
+      pattern: '(August 2023|early 2023)'
+    gemini-1.5-pro:
+      pattern: '(November 2023|early 2024)'
+    gemini-2.0-flash:
+      pattern: '(2024|2025)'
+
+- id: knowledge_maker_identity
+  category: knowledge
+  weight: 2.5
+  prompt: 'Who created you? Reply with just the company name.'
+  expected:
+    gpt-4o:
+      contains: ["openai"]
+    gpt-4o-mini:
+      contains: ["openai"]
+    gpt-3.5-turbo:
+      contains: ["openai"]
+    claude-3-5-sonnet:
+      contains: ["anthropic"]
+    claude-3-opus:
+      contains: ["anthropic"]
+    gemini-1.5-pro:
+      contains: ["google"]
+    gemini-2.0-flash:
+      contains: ["google"]
+    llama-3-70b:
+      contains: ["meta"]
+    llama-3-8b:
+      contains: ["meta"]
+    qwen-72b:
+      contains: ["alibaba", "qwen"]
+    qwen-7b:
+      contains: ["alibaba", "qwen"]
+    deepseek-v3:
+      contains: ["deepseek"]
+    deepseek-r1:
+      contains: ["deepseek"]
+    mistral-7b:
+      contains: ["mistral"]
+
+- id: knowledge_model_name_indirect
+  category: knowledge
+  weight: 2.0
+  prompt: 'Complete this sentence with just the missing word: I am ___. (fill in your model name)'
+  expected:
+    gpt-4o:
+      pattern: '(GPT-4|ChatGPT|an AI)'
+    gpt-4o-mini:
+      pattern: '(GPT-4|ChatGPT|an AI)'
+    gpt-3.5-turbo:
+      pattern: '(GPT-3|ChatGPT|an AI)'
+    claude-3-5-sonnet:
+      pattern: '(Claude)'
+    claude-3-opus:
+      pattern: '(Claude)'
+    gemini-1.5-pro:
+      pattern: '(Gemini)'
+    gemini-2.0-flash:
+      pattern: '(Gemini)'
+    llama-3-70b:
+      pattern: '(Llama|Meta)'
+    deepseek-v3:
+      pattern: '(DeepSeek)'
+    deepseek-r1:
+      pattern: '(DeepSeek)'

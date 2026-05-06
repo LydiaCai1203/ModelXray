@@ -1,0 +1,75 @@
+# Tokenizer fingerprint probes
+# These exploit differences in how models tokenize and process text
+
+- id: tok_strawberry
+  category: tokenizer
+  weight: 2.0
+  prompt: "Count the number of letter 'r' in the word 'strawberry'. Reply with just the number."
+  expected:
+    gpt-3.5-turbo:
+      contains: ["2"]
+      not_contains: ["3"]
+    gpt-4o:
+      contains: ["3"]
+    gpt-4o-mini:
+      contains: ["3"]
+    claude-3-5-sonnet:
+      contains: ["3"]
+    claude-3-opus:
+      contains: ["3"]
+    gemini-1.5-pro:
+      contains: ["3"]
+    gemini-2.0-flash:
+      contains: ["3"]
+
+- id: tok_unicode_repeat
+  category: tokenizer
+  weight: 1.8
+  prompt: "Repeat this exact string 3 times with no spaces or separators: 'ñoño'"
+  expected:
+    gpt-3.5-turbo:
+      contains: ["ñoñoñoñoñoño"]
+    gpt-4o:
+      contains: ["ñoñoñoñoñoño"]
+    claude-3-5-sonnet:
+      contains: ["ñoñoñoñoñoño"]
+    # Models that fail tokenize ñ differently and produce wrong output
+    gpt-4o-mini:
+      contains: ["ñoñoñoñoñoño"]
+
+- id: tok_reverse_word
+  category: tokenizer
+  weight: 1.5
+  prompt: "Reverse the string 'ChatGPT' character by character. Reply with just the reversed string."
+  expected:
+    gpt-3.5-turbo:
+      contains: ["tpgtatc"]
+    gpt-4o:
+      contains: ["TPGtahC"]
+    gpt-4o-mini:
+      contains: ["TPGtahC"]
+    claude-3-5-sonnet:
+      contains: ["TPGtahC"]
+    claude-3-opus:
+      contains: ["TPGtahC"]
+    gemini-1.5-pro:
+      contains: ["TPGtahC"]
+
+- id: tok_syllable_count
+  category: tokenizer
+  weight: 1.5
+  prompt: "How many syllables does the word 'particularly' have? Reply with just the number."
+  expected:
+    gpt-3.5-turbo:
+      contains: ["5"]
+    gpt-4o:
+      contains: ["5"]
+    gpt-4o-mini:
+      contains: ["5"]
+    claude-3-5-sonnet:
+      contains: ["5"]
+    gemini-1.5-pro:
+      contains: ["5"]
+    # Some models answer 6 due to different phonetic training
+    llama-3-70b:
+      contains: ["5"]
