@@ -15,7 +15,7 @@ def _probe_passed(r: ProbeResult, claimed_model: str) -> bool | None:
 
     Returns True if matched, False if not matched, None if no expectation exists.
     """
-    if r.response.startswith("ERROR:"):
+    if r.response.startswith(("ERROR:", "SKIPPED:")):
         return None
     key = _best_key(list(r.scores.keys()), claimed_model)
     if key is None:
@@ -25,7 +25,7 @@ def _probe_passed(r: ProbeResult, claimed_model: str) -> bool | None:
 
 def _short_response(response: str, max_len: int = 50) -> str:
     """Extract a short, readable preview of the response."""
-    if response.startswith("ERROR:"):
+    if response.startswith(("ERROR:", "SKIPPED:")):
         return response[:max_len]
     # Take first line, strip whitespace
     first_line = response.split("\n")[0].strip()
@@ -50,12 +50,17 @@ def _print_verbose(probe_results: list[ProbeResult], claimed_model: str) -> dict
         console.print(f" [bold cyan]Category: {category}[/bold cyan]")
         for r in groups[category]:
             is_error = r.response.startswith("ERROR:")
+            is_skipped = r.response.startswith("SKIPPED:")
             preview = _short_response(r.response)
 
             if is_error:
                 errors += 1
                 console.print(
                     f"  [red]\u2718[/red] {r.probe_id:<35} [red]\u2192 {preview}[/red]"
+                )
+            elif is_skipped:
+                console.print(
+                    f"  [dim]\u21b7[/dim] {r.probe_id:<35} [dim]\u2192 {preview}[/dim]"
                 )
             else:
                 status = _probe_passed(r, claimed_model)

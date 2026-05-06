@@ -1,0 +1,80 @@
+# Vision stress test probes — sequential 3-level image challenge
+# Image: vision_stress_test_3.75mp.png (2576x1456, 3.75 Megapixels)
+# Answer key from test designer:
+#   R3C5 CODE = 4753
+#   Bottom TOKEN = 7842
+#   Multiple red dots scattered throughout
+
+- id: vision_L1_basic_ocr
+  category: vision
+  type: vision
+  weight: 2.0
+  image: vision_stress_test_3.75mp.png
+  prompt: "这张图标题是什么？分辨率标注是多少？请直接回答。"
+  level: 1
+  expected:
+    # Any model with working vision should pass this
+    claude-opus-4-6:
+      contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
+    claude-opus-4-7:
+      contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
+    claude-sonnet-4-6:
+      contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
+    gpt-4o:
+      contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
+    gpt-4o-mini:
+      contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
+    gemini-2.0-flash:
+      contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
+    gemini-2.5-pro:
+      contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
+
+- id: vision_L2_fine_detail
+  category: vision
+  type: vision
+  weight: 2.5
+  image: vision_stress_test_3.75mp.png
+  prompt: "请找到第 3 行第 5 列（R3C5）的网格单元，告诉我里面写的 CODE 数字是多少？另外它的版本号 V 是多少？请直接回答，格式：CODE:数字, V:版本号"
+  level: 2
+  depends_on: vision_L1_basic_ocr
+  expected:
+    # 10px font — 3.75MP native resolution can read; 1.15MP downsampled cannot
+    claude-opus-4-7:
+      contains: ["4753"]
+    claude-opus-4-6:
+      contains: ["4753"]
+    claude-sonnet-4-6:
+      contains: ["4753"]
+    gpt-4o:
+      contains: ["4753"]
+    gpt-4o-mini:
+      contains: ["4753"]
+    gemini-2.5-pro:
+      contains: ["4753"]
+    gemini-2.0-flash:
+      contains: ["4753"]
+
+- id: vision_L3_hidden_token
+  category: vision
+  type: vision
+  weight: 2.5
+  image: vision_stress_test_3.75mp.png
+  prompt: "图片底部灰色横幅里有一行隐藏指令，其中提到的 TOKEN 号码是多少？另外，请数一下图中直径小于 10 像素的红色圆点有几个，并告诉我它们的大致位置。请直接回答。"
+  level: 3
+  depends_on: vision_L2_fine_detail
+  expected:
+    # 10px micro-print at bottom + tiny red dots scattered across image
+    claude-opus-4-7:
+      contains: ["7842"]
+    claude-opus-4-6:
+      contains: ["7842"]
+    claude-sonnet-4-6:
+      contains: ["7842"]
+    gpt-4o:
+      contains: ["7842"]
+    gpt-4o-mini:
+      contains: ["7842"]
+    gemini-2.5-pro:
+      contains: ["7842"]
+    gemini-2.0-flash:
+      contains: ["7842"]

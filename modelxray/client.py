@@ -20,6 +20,13 @@ class BaseClient(ABC):
         content = self.query(prompt, temperature)
         return content, {}
 
+    def query_vision(
+        self, prompt: str, image_base64: str, media_type: str = "image/png",
+        temperature: float = 0, max_tokens: int = 1024,
+    ) -> str:
+        """Query with an image (base64-encoded). Subclasses override for native vision."""
+        raise NotImplementedError("This client does not support vision queries")
+
     def _check_html(self, content: str) -> str:
         """Detect HTML responses (gateway/proxy errors)."""
         stripped = content.strip().lower()
@@ -83,6 +90,25 @@ class OpenAIChatClient(BaseClient):
             }
         return content, usage
 
+    def query_vision(
+        self, prompt: str, image_base64: str, media_type: str = "image/png",
+        temperature: float = 0, max_tokens: int = 1024,
+    ) -> str:
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=[{
+                "role": "user",
+                "content": [
+                    {"type": "image_url", "image_url": {"url": f"data:{media_type};base64,{image_base64}"}},
+                    {"type": "text", "text": prompt},
+                ],
+            }],
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+        content = _extract_chat_content(response)
+        return self._check_html(content)
+
 
 class OpenAIResponsesClient(BaseClient):
     """Client for OpenAI Responses API (responses.create)."""
@@ -116,6 +142,25 @@ class OpenAIResponsesClient(BaseClient):
                 "total_tokens": (response.usage.input_tokens or 0) + (response.usage.output_tokens or 0),
             }
         return content, usage
+
+    def query_vision(
+        self, prompt: str, image_base64: str, media_type: str = "image/png",
+        temperature: float = 0, max_tokens: int = 1024,
+    ) -> str:
+        response = self.client.responses.create(
+            model=self.model,
+            input=[{
+                "role": "user",
+                "content": [
+                    {"type": "input_image", "image_url": f"data:{media_type};base64,{image_base64}"},
+                    {"type": "input_text", "text": prompt},
+                ],
+            }],
+            temperature=temperature,
+            max_output_tokens=max_tokens,
+        )
+        content = response.output_text or ""
+        return self._check_html(content)
 
 
 class AnthropicClient(BaseClient):
@@ -157,6 +202,25 @@ class AnthropicClient(BaseClient):
                 "total_tokens": (response.usage.input_tokens or 0) + (response.usage.output_tokens or 0),
             }
         return content, usage
+
+    def query_vision(
+        self, prompt: str, image_base64: str, media_type: str = "image/png",
+        temperature: float = 0, max_tokens: int = 1024,
+    ) -> str:
+        response = self.client.messages.create(
+            model=self.model,
+            messages=[{
+                "role": "user",
+                "content": [
+                    {"type": "image", "source": {"type": "base64", "media_type": media_type, "data": image_base64}},
+                    {"type": "text", "text": prompt},
+                ],
+            }],
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+        content = response.content[0].text if response.content else ""
+        return self._check_html(content)
 
 
 _API_TYPES = {
