@@ -28,6 +28,10 @@
       token_range: [60, 100]
     gpt-4o-mini:
       token_range: [60, 100]
+    gpt-5.4:
+      token_range: [55, 95]
+    gpt-5.5:
+      token_range: [55, 95]
     deepseek-v3:
       token_range: [50, 90]
     deepseek-r1:
@@ -55,6 +59,10 @@
       token_range: [70, 110]
     gpt-4o-mini:
       token_range: [70, 110]
+    gpt-5.4:
+      token_range: [65, 105]
+    gpt-5.5:
+      token_range: [65, 105]
     deepseek-v3:
       token_range: [65, 105]
     deepseek-r1:
@@ -82,6 +90,10 @@
       token_range: [40, 70]
     gpt-4o-mini:
       token_range: [40, 70]
+    gpt-5.4:
+      token_range: [38, 68]
+    gpt-5.5:
+      token_range: [38, 68]
     deepseek-v3:
       token_range: [35, 65]
     deepseek-r1:
@@ -114,6 +126,10 @@
       pattern: '(f\s*i|ﬁ)'
     gpt-4o-mini:
       pattern: '(f\s*i|ﬁ)'
+    gpt-5.4:
+      pattern: '(f\s*i|ﬁ)'
+    gpt-5.5:
+      pattern: '(f\s*i|ﬁ)'
 
 - id: tok_version_zwj_handling
   category: tokenizer
@@ -133,6 +149,10 @@
       contains: ["2"]
     gpt-4o-mini:
       pattern: '(2|7|8)'
+    gpt-5.4:
+      contains: ["2"]
+    gpt-5.5:
+      contains: ["2"]
     claude-3-5-sonnet:
       pattern: '(2|7|8)'
     claude-sonnet-4:

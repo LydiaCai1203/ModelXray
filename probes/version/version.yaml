@@ -11,6 +11,10 @@
       contains: ["9.9"]
     gpt-4o-mini:
       contains: ["9.9"]
+    gpt-5.4:
+      contains: ["9.9"]
+    gpt-5.5:
+      contains: ["9.9"]
     claude-3-opus:
       contains: ["9.9"]
     claude-3-sonnet:
@@ -53,6 +57,10 @@
       pattern: '(128k|128,000)'
     gpt-4o-mini:
       pattern: '(128k|128,000)'
+    gpt-5.4:
+      pattern: '(1M|1,000,000|1,050,000|1 million|1050)'
+    gpt-5.5:
+      pattern: '(1M|1,000,000|1,050,000|1 million|1050)'
     claude-3-opus:
       pattern: '(200k|200,000)'
     claude-3-sonnet:
@@ -92,6 +100,10 @@
     gpt-4o:
       contains: ["5"]
     gpt-4o-mini:
+      contains: ["5"]
+    gpt-5.4:
+      contains: ["5"]
+    gpt-5.5:
       contains: ["5"]
     claude-3-opus:
       contains: ["5"]
@@ -136,6 +148,10 @@
     gpt-4o:
       pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
     gpt-4o-mini:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    gpt-5.4:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    gpt-5.5:
       pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
     gpt-3.5-turbo:
       pattern: '.'

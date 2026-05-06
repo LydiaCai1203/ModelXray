@@ -12,6 +12,10 @@
       contains: ["14"]
     gpt-4o-mini:
       contains: ["14"]
+    gpt-5.4:
+      contains: ["14"]
+    gpt-5.5:
+      contains: ["14"]
     claude-3-opus:
       contains: ["14"]
     claude-3-sonnet:

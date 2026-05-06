@@ -24,6 +24,10 @@
       contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
     gpt-4o-mini:
       contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
+    gpt-5.4:
+      contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
+    gpt-5.5:
+      contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
     gemini-2.0-flash:
       contains: ["MODEL VISION STRESS TEST", "2576", "1456"]
     gemini-2.5-pro:
@@ -49,6 +53,10 @@
       contains: ["4753"]
     gpt-4o-mini:
       contains: ["4753"]
+    gpt-5.4:
+      contains: ["4753"]
+    gpt-5.5:
+      contains: ["4753"]
     gemini-2.5-pro:
       contains: ["4753"]
     gemini-2.0-flash:
@@ -73,6 +81,10 @@
     gpt-4o:
       contains: ["7842"]
     gpt-4o-mini:
+      contains: ["7842"]
+    gpt-5.4:
+      contains: ["7842"]
+    gpt-5.5:
       contains: ["7842"]
     gemini-2.5-pro:
       contains: ["7842"]

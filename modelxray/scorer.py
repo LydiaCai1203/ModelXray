@@ -77,13 +77,21 @@ _FAMILY_TOKENS = {
     "opus", "sonnet", "haiku", "flash", "pro", "turbo", "mini", "nano",
     "o1", "o3", "o4",
     "k2", "k2.5", "k2.6",
+    "5.4", "5.5",
 }
 
 
 def _tokenize_model(name: str) -> set[str]:
     """Split model name into matchable tokens: 'claude-opus-4-6' -> {'claude', 'opus'}"""
-    parts = re.split(r'[-_.\s]+', name.lower())
-    return {p for p in parts if p in _FAMILY_TOKENS}
+    parts = re.split(r'[-_.\s/]+', name.lower())
+    # Also try composite tokens like "5.4" from adjacent parts
+    tokens = {p for p in parts if p in _FAMILY_TOKENS}
+    # Rejoin with dot for version tokens: ["5","4"] -> try "5.4"
+    for i in range(len(parts) - 1):
+        composite = f"{parts[i]}.{parts[i+1]}"
+        if composite in _FAMILY_TOKENS:
+            tokens.add(composite)
+    return tokens
 
 
 def _best_key(probe_keys: list[str], candidate: str) -> str | None:

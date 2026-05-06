@@ -29,6 +29,10 @@
       pattern: '1\.'
     gpt-4o-mini:
       pattern: '1\.'
+    gpt-5.4:
+      pattern: '1\.'
+    gpt-5.5:
+      pattern: '1\.'
     gemini-1.5-pro:
       pattern: '(-|\*) '
     gemini-2.0-flash:
@@ -46,6 +50,10 @@
     gpt-3.5-turbo:
       contains: ['4']
     gpt-4o:
+      contains: ['4']
+    gpt-5.4:
+      contains: ['4']
+    gpt-5.5:
       contains: ['4']
     claude-3-opus:
       contains: ['4']
@@ -103,6 +111,10 @@
       pattern: 'def is_prime'
     gpt-4o-mini:
       pattern: 'def is_prime'
+    gpt-5.4:
+      pattern: 'def is_prime'
+    gpt-5.5:
+      pattern: 'def is_prime'
     gpt-3.5-turbo:
       pattern: 'def is_prime'
     kimi-k2.5:
@@ -139,6 +151,10 @@
       not_contains: ['##', '```']
     gpt-4o-mini:
       not_contains: ['##']
+    gpt-5.4:
+      not_contains: ['##', '```']
+    gpt-5.5:
+      not_contains: ['##', '```']
     kimi-k2.5:
       not_contains: ['##', '```']
     kimi-k2.6:

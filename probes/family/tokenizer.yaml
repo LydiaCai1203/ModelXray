@@ -13,6 +13,10 @@
       contains: ["3"]
     gpt-4o-mini:
       contains: ["3"]
+    gpt-5.4:
+      contains: ["3"]
+    gpt-5.5:
+      contains: ["3"]
     claude-3-opus:
       contains: ["3"]
     claude-3-sonnet:
@@ -74,6 +78,10 @@
     # Models that fail tokenize ñ differently and produce wrong output
     gpt-4o-mini:
       contains: ["ñoñoñoñoñoño"]
+    gpt-5.4:
+      contains: ["ñoñoñoñoñoño"]
+    gpt-5.5:
+      contains: ["ñoñoñoñoñoño"]
     kimi-k2.5:
       contains: ["ñoñoñoñoñoño"]
     kimi-k2.6:
@@ -89,6 +97,10 @@
     gpt-4o:
       contains: ["TPGtahC"]
     gpt-4o-mini:
+      contains: ["TPGtahC"]
+    gpt-5.4:
+      contains: ["TPGtahC"]
+    gpt-5.5:
       contains: ["TPGtahC"]
     claude-3-opus:
       contains: ["TPGtahC"]
@@ -127,6 +139,10 @@
     gpt-4o:
       contains: ["5"]
     gpt-4o-mini:
+      contains: ["5"]
+    gpt-5.4:
+      contains: ["5"]
+    gpt-5.5:
       contains: ["5"]
     claude-3-opus:
       contains: ["5"]

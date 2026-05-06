@@ -35,6 +35,10 @@
       pattern: '(November 2023|early 2024)'
     gemini-2.0-flash:
       pattern: '(2024|2025)'
+    gpt-5.4:
+      pattern: '(August 2025|Aug 2025|2025)'
+    gpt-5.5:
+      pattern: '(December 2025|Dec 2025|2025)'
     kimi-k2.5:
       pattern: '(April 2024|2024)'
     kimi-k2.6:
@@ -48,6 +52,10 @@
     gpt-4o:
       contains: ["openai"]
     gpt-4o-mini:
+      contains: ["openai"]
+    gpt-5.4:
+      contains: ["openai"]
+    gpt-5.5:
       contains: ["openai"]
     gpt-3.5-turbo:
       contains: ["openai"]
@@ -103,6 +111,10 @@
       pattern: '(GPT-4|ChatGPT|an AI)'
     gpt-4o-mini:
       pattern: '(GPT-4|ChatGPT|an AI)'
+    gpt-5.4:
+      pattern: '(GPT-5|GPT|ChatGPT)'
+    gpt-5.5:
+      pattern: '(GPT-5|GPT|ChatGPT)'
     gpt-3.5-turbo:
       pattern: '(GPT-3|ChatGPT|an AI)'
     claude-3-opus:
