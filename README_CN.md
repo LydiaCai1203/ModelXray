@@ -49,7 +49,7 @@ modelxray -t anthropic -b https://api.anthropic.com -k sk-ant-xxx -m claude-sonn
 
 ## 工作原理
 
-通过 5 个独立维度的 20 个精心设计的探针：
+通过 6 个独立维度的 25 个精心设计的探针：
 
 | 维度 | 测试内容 |
 |------|----------|
@@ -57,9 +57,12 @@ modelxray -t anthropic -b https://api.anthropic.com -k sk-ant-xxx -m claude-sonn
 | 身份/知识 | 自我报告的创建者、训练截止日期 |
 | 推理深度 | 弱模型会预测性失败的问题 |
 | Tokenizer 行为 | 字符计数、Unicode 处理 |
+| Tokenizer 版本指纹 | 不同模型版本间的 token 计数比率和 Unicode 拆分差异 |
 | 输出风格 | 默认格式偏好 |
 
 响应经过评分并使用贝叶斯加权聚合，产生置信度排名。
+
+对于 `token_count` 类型探针，工具会发送固定文本并对比 API 返回的 `usage.prompt_tokens` 与预期范围——不同代际的 tokenizer 对相同输入会产生可测量的 token 数差异。
 
 ## 输出示例
 
@@ -76,16 +79,47 @@ modelxray -t anthropic -b https://api.anthropic.com -k sk-ant-xxx -m claude-sonn
 ╭──────────── Verdict ─────────────╮
 │ Likely: claude-3-5-sonnet (72%)  │
 ╰──────────────────────────────────╯
-Probes run: 20
+Probes run: 25
 ```
 
 ## 支持的模型
 
-GPT-3.5-turbo, GPT-4o, GPT-4o-mini, Claude 3 Opus, Claude 3.5 Sonnet, Claude Sonnet 4, Gemini 1.5 Pro, Gemini 2.0 Flash, Llama 3 (8B/70B), Qwen (7B/72B), DeepSeek V3/R1, Kimi K2.5/K2.6, Mistral 7B。
+GPT-3.5-turbo, GPT-4o, GPT-4o-mini, Claude 3 Opus, Claude 3.5 Sonnet, Claude Sonnet 4, Claude Opus 4.6/4.7, Claude Sonnet 4.6/4.7, Gemini 1.5 Pro, Gemini 2.0 Flash, Llama 3 (8B/70B), Qwen (7B/72B), DeepSeek V3/R1, Kimi K2.5/K2.6, Mistral 7B。
 
 ## 成本
 
-每次检测运行成本 < $0.01（20 个探针 × 平均约 300 tokens）。
+每次检测运行成本 < $0.01（25 个探针 × 平均约 300 tokens）。
+
+## AI 解读
+
+你可以指定一个"解读模型"来对检测结果生成自然语言分析报告——当置信度分布模糊时特别有用。
+
+```bash
+modelxray -b https://api.openai.com -k sk-xxx -m gpt-4o \
+  --analyst-url https://api.openai.com \
+  --analyst-key sk-xxx \
+  --analyst-model gpt-4o
+```
+
+解读模型可以通过 `--analyst-type` 使用与被测模型不同的 API 协议：
+
+```bash
+# 用 Anthropic 协议测目标模型，用 OpenAI 做解读
+modelxray -t anthropic -b https://api.anthropic.com -k sk-ant-xxx -m claude-sonnet-4-6 \
+  --analyst-type openai-chat \
+  --analyst-url https://api.openai.com \
+  --analyst-key sk-xxx \
+  --analyst-model gpt-4o
+```
+
+| 参数 | 说明 |
+|------|------|
+| `--analyst-url` | 解读模型的 API base URL |
+| `--analyst-key` | 解读模型的 API key |
+| `--analyst-model` | 解读模型名称 |
+| `--analyst-type` | 解读模型的 API 协议（默认跟随 `--api-type`） |
+
+> `--analyst-url`、`--analyst-key`、`--analyst-model` 三者必须同时提供或同时省略。
 
 ## 局限性
 

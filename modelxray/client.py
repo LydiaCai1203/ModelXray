@@ -7,7 +7,7 @@ class BaseClient(ABC):
     """Base class for all API clients."""
 
     @abstractmethod
-    def query(self, prompt: str, temperature: float = 0) -> str:
+    def query(self, prompt: str, temperature: float = 0, max_tokens: int = 500) -> str:
         ...
 
     def query_with_usage(self, prompt: str, temperature: float = 0) -> tuple[str, dict]:
@@ -57,16 +57,16 @@ class OpenAIChatClient(BaseClient):
         self.client = OpenAI(base_url=_ensure_v1(base_url), api_key=api_key)
         self.model = model
 
-    def _call(self, prompt: str, temperature: float = 0):
+    def _call(self, prompt: str, temperature: float = 0, max_tokens: int = 500):
         return self.client.chat.completions.create(
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             temperature=temperature,
-            max_tokens=500,
+            max_tokens=max_tokens,
         )
 
-    def query(self, prompt: str, temperature: float = 0) -> str:
-        response = self._call(prompt, temperature)
+    def query(self, prompt: str, temperature: float = 0, max_tokens: int = 500) -> str:
+        response = self._call(prompt, temperature, max_tokens)
         content = _extract_chat_content(response)
         return self._check_html(content)
 
@@ -91,16 +91,16 @@ class OpenAIResponsesClient(BaseClient):
         self.client = OpenAI(base_url=_ensure_v1(base_url), api_key=api_key)
         self.model = model
 
-    def _call(self, prompt: str, temperature: float = 0):
+    def _call(self, prompt: str, temperature: float = 0, max_tokens: int = 500):
         return self.client.responses.create(
             model=self.model,
             input=prompt,
             temperature=temperature,
-            max_output_tokens=500,
+            max_output_tokens=max_tokens,
         )
 
-    def query(self, prompt: str, temperature: float = 0) -> str:
-        response = self._call(prompt, temperature)
+    def query(self, prompt: str, temperature: float = 0, max_tokens: int = 500) -> str:
+        response = self._call(prompt, temperature, max_tokens)
         content = response.output_text or ""
         return self._check_html(content)
 
@@ -132,16 +132,16 @@ class AnthropicClient(BaseClient):
         self.client = anthropic.Anthropic(**kwargs)
         self.model = model
 
-    def _call(self, prompt: str, temperature: float = 0):
+    def _call(self, prompt: str, temperature: float = 0, max_tokens: int = 500):
         return self.client.messages.create(
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             temperature=temperature,
-            max_tokens=500,
+            max_tokens=max_tokens,
         )
 
-    def query(self, prompt: str, temperature: float = 0) -> str:
-        response = self._call(prompt, temperature)
+    def query(self, prompt: str, temperature: float = 0, max_tokens: int = 500) -> str:
+        response = self._call(prompt, temperature, max_tokens)
         content = response.content[0].text if response.content else ""
         return self._check_html(content)
 

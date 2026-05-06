@@ -133,3 +133,16 @@ def print_report(result: dict, claimed_model: str, verbose: bool = False) -> Non
     else:
         console.print(f"[dim]Probes run: {total}[/dim]")
     console.print()
+
+
+def print_analysis(analysis: str) -> None:
+    """Render the AI analyst's interpretation as a Rich Panel."""
+    from rich.markdown import Markdown
+
+    console.print()
+    console.print(Panel(
+        Markdown(analysis),
+        title="AI Analysis",
+        box=box.ROUNDED,
+        padding=(1, 2),
+    ))
