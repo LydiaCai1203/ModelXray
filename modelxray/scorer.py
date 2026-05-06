@@ -42,8 +42,10 @@ def score_probe(probe: dict, response: str) -> ProbeResult:
 # Canonical family tokens extracted from model names
 _FAMILY_TOKENS = {
     "gpt", "claude", "gemini", "llama", "qwen", "deepseek", "mistral",
+    "kimi", "moonshot",
     "opus", "sonnet", "haiku", "flash", "pro", "turbo", "mini", "nano",
     "o1", "o3", "o4",
+    "k2", "k2.5", "k2.6",
 }
 
 

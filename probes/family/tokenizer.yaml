@@ -37,6 +37,10 @@
       contains: ["3"]
     gemini-2.0-flash:
       contains: ["3"]
+    kimi-k2.5:
+      contains: ["3"]
+    kimi-k2.6:
+      contains: ["3"]
 
 - id: tok_unicode_repeat
   category: tokenizer
@@ -69,6 +73,10 @@
       contains: ["ñoñoñoñoñoño"]
     # Models that fail tokenize ñ differently and produce wrong output
     gpt-4o-mini:
+      contains: ["ñoñoñoñoñoño"]
+    kimi-k2.5:
+      contains: ["ñoñoñoñoñoño"]
+    kimi-k2.6:
       contains: ["ñoñoñoñoñoño"]
 
 - id: tok_reverse_word
@@ -104,6 +112,10 @@
       contains: ["TPGtahC"]
     gemini-1.5-pro:
       contains: ["TPGtahC"]
+    kimi-k2.5:
+      contains: ["TPGtahC"]
+    kimi-k2.6:
+      contains: ["TPGtahC"]
 
 - id: tok_syllable_count
   category: tokenizer
@@ -138,6 +150,9 @@
       contains: ["5"]
     gemini-1.5-pro:
       contains: ["5"]
-    # Some models answer 6 due to different phonetic training
     llama-3-70b:
+      contains: ["5"]
+    kimi-k2.5:
+      contains: ["5"]
+    kimi-k2.6:
       contains: ["5"]

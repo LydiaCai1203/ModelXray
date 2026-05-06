@@ -41,3 +41,7 @@
       pattern: '(14|13|15)'
     qwen-7b:
       pattern: '(14|13|15)'
+    kimi-k2.5:
+      contains: ["14"]
+    kimi-k2.6:
+      contains: ["14"]

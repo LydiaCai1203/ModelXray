@@ -35,6 +35,10 @@
       pattern: '(November 2023|early 2024)'
     gemini-2.0-flash:
       pattern: '(2024|2025)'
+    kimi-k2.5:
+      pattern: '(April 2024|2024)'
+    kimi-k2.6:
+      pattern: '(April 2025|2025)'
 
 - id: knowledge_maker_identity
   category: knowledge
@@ -85,6 +89,10 @@
       contains: ["deepseek"]
     mistral-7b:
       contains: ["mistral"]
+    kimi-k2.5:
+      pattern: '(moonshot|月之暗面)'
+    kimi-k2.6:
+      pattern: '(moonshot|月之暗面)'
 
 - id: knowledge_model_name_indirect
   category: knowledge
@@ -127,3 +135,7 @@
       pattern: '(DeepSeek)'
     deepseek-r1:
       pattern: '(DeepSeek)'
+    kimi-k2.5:
+      pattern: '(Kimi)'
+    kimi-k2.6:
+      pattern: '(Kimi)'

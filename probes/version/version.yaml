@@ -37,6 +37,10 @@
       contains: ["9.9"]
     llama-3-8b:
       contains: ["9.11"]
+    kimi-k2.5:
+      contains: ["9.9"]
+    kimi-k2.6:
+      contains: ["9.9"]
 
 - id: version_context_window_awareness
   category: version
@@ -73,6 +77,10 @@
       pattern: '(1M|1,000,000|1 million)'
     gemini-2.0-flash:
       pattern: '(1M|1,000,000)'
+    kimi-k2.5:
+      pattern: '(256k|256,000|256K)'
+    kimi-k2.6:
+      pattern: '(256k|256,000|256K)'
 
 - id: version_reasoning_depth
   category: version
@@ -115,6 +123,10 @@
       contains: ["10"]
     qwen-72b:
       contains: ["5"]
+    kimi-k2.5:
+      contains: ["5"]
+    kimi-k2.6:
+      contains: ["5"]
 
 - id: version_instruction_following
   category: version
@@ -146,4 +158,8 @@
     claude-sonnet-4-6:
       pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
     claude-opus-4-6:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    kimi-k2.5:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    kimi-k2.6:
       pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
