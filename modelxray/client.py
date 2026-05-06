@@ -36,9 +36,17 @@ class BaseClient(ABC):
 
 
 def _ensure_v1(base_url: str) -> str:
-    """Ensure base URL has /v1 suffix for OpenAI-compatible APIs."""
+    """Ensure base URL has /v1 suffix for standard OpenAI endpoints.
+
+    Only auto-appends /v1 for known OpenAI-compatible hosts.
+    Custom gateways / proxies are left as-is.
+    """
     base_url = base_url.rstrip("/")
-    if not base_url.endswith("/v1"):
+    from urllib.parse import urlparse
+
+    host = urlparse(base_url).hostname or ""
+    known_hosts = {"api.openai.com", "api.moonshot.cn", "api.deepseek.com"}
+    if host in known_hosts and not base_url.endswith("/v1"):
         base_url += "/v1"
     return base_url
 
