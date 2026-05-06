@@ -11,10 +11,26 @@
       pattern: '(October 2023|April 2024)'
     gpt-4o-mini:
       pattern: '(October 2023|July 2025)'
-    claude-3-5-sonnet:
-      pattern: '(April 2024|early 2024)'
     claude-3-opus:
       pattern: '(August 2023|early 2023)'
+    claude-3-sonnet:
+      pattern: '(August 2023|early 2023)'
+    claude-3-haiku:
+      pattern: '(August 2023|early 2023)'
+    claude-3-5-sonnet:
+      pattern: '(April 2024|early 2024)'
+    claude-3-5-haiku:
+      pattern: '(April 2024|early 2024)'
+    claude-sonnet-4:
+      pattern: '(March 2025|early 2025|2025)'
+    claude-opus-4:
+      pattern: '(March 2025|early 2025|2025)'
+    claude-haiku-4-5:
+      pattern: '(March 2025|early 2025|2025)'
+    claude-sonnet-4-6:
+      pattern: '(March 2025|May 2025|2025)'
+    claude-opus-4-6:
+      pattern: '(March 2025|May 2025|2025)'
     gemini-1.5-pro:
       pattern: '(November 2023|early 2024)'
     gemini-2.0-flash:
@@ -31,9 +47,25 @@
       contains: ["openai"]
     gpt-3.5-turbo:
       contains: ["openai"]
+    claude-3-opus:
+      contains: ["anthropic"]
+    claude-3-sonnet:
+      contains: ["anthropic"]
+    claude-3-haiku:
+      contains: ["anthropic"]
     claude-3-5-sonnet:
       contains: ["anthropic"]
-    claude-3-opus:
+    claude-3-5-haiku:
+      contains: ["anthropic"]
+    claude-sonnet-4:
+      contains: ["anthropic"]
+    claude-opus-4:
+      contains: ["anthropic"]
+    claude-haiku-4-5:
+      contains: ["anthropic"]
+    claude-sonnet-4-6:
+      contains: ["anthropic"]
+    claude-opus-4-6:
       contains: ["anthropic"]
     gemini-1.5-pro:
       contains: ["google"]
@@ -65,9 +97,25 @@
       pattern: '(GPT-4|ChatGPT|an AI)'
     gpt-3.5-turbo:
       pattern: '(GPT-3|ChatGPT|an AI)'
+    claude-3-opus:
+      pattern: '(Claude)'
+    claude-3-sonnet:
+      pattern: '(Claude)'
+    claude-3-haiku:
+      pattern: '(Claude)'
     claude-3-5-sonnet:
       pattern: '(Claude)'
-    claude-3-opus:
+    claude-3-5-haiku:
+      pattern: '(Claude)'
+    claude-sonnet-4:
+      pattern: '(Claude)'
+    claude-opus-4:
+      pattern: '(Claude)'
+    claude-haiku-4-5:
+      pattern: '(Claude)'
+    claude-sonnet-4-6:
+      pattern: '(Claude)'
+    claude-opus-4-6:
       pattern: '(Claude)'
     gemini-1.5-pro:
       pattern: '(Gemini)'

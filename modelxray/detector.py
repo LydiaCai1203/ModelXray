@@ -35,7 +35,7 @@ def detect(client: ModelClient, mode: str = "standard") -> dict:
         except Exception as e:
             results.append(ProbeResult(probe_id=probe["id"], response=f"ERROR: {e}"))
 
-    confidence = aggregate(results, weights)
+    confidence = aggregate(results, weights, claimed_model=client.model)
     return {
         "confidence": confidence,
         "probe_results": results,

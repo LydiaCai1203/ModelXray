@@ -9,35 +9,70 @@ class ProbeResult:
     scores: dict[str, float] = field(default_factory=dict)  # model_id -> score 0..1
 
 
+def _eval_expected(expected: dict | str, response: str) -> float:
+    resp_lower = response.lower().strip()
+    if isinstance(expected, str):
+        return 1.0 if expected.lower() in resp_lower else 0.0
+    contains = expected.get("contains", [])
+    not_contains = expected.get("not_contains", [])
+    pattern = expected.get("pattern")
+    for c in contains:
+        if c.lower() not in resp_lower:
+            return 0.0
+    for nc in not_contains:
+        if nc.lower() in resp_lower:
+            return 0.0
+    if pattern and not re.search(pattern, response, re.IGNORECASE):
+        return 0.0
+    return 1.0
+
+
 def score_probe(probe: dict, response: str) -> ProbeResult:
     result = ProbeResult(probe_id=probe["id"], response=response)
-    resp_lower = response.lower().strip()
-
     for model_id, expected in probe.get("expected", {}).items():
-        if isinstance(expected, str):
-            result.scores[model_id] = 1.0 if expected.lower() in resp_lower else 0.0
-        elif isinstance(expected, dict):
-            contains = expected.get("contains", [])
-            not_contains = expected.get("not_contains", [])
-            pattern = expected.get("pattern")
-            score = 1.0
-            for c in contains:
-                if c.lower() not in resp_lower:
-                    score = 0.0
-                    break
-            for nc in not_contains:
-                if nc.lower() in resp_lower:
-                    score = 0.0
-                    break
-            if pattern and not re.search(pattern, response, re.IGNORECASE):
-                score = 0.0
-            result.scores[model_id] = score
-
+        result.scores[model_id] = _eval_expected(expected, response)
     return result
 
 
-def aggregate(results: list[ProbeResult], probe_weights: dict[str, float]) -> dict[str, float]:
-    """Bayesian-style weighted aggregation. Returns model_id -> confidence 0..1."""
+# Canonical family tokens extracted from model names
+_FAMILY_TOKENS = {
+    "gpt", "claude", "gemini", "llama", "qwen", "deepseek", "mistral",
+    "opus", "sonnet", "haiku", "flash", "pro", "turbo", "mini",
+}
+
+
+def _tokenize_model(name: str) -> set[str]:
+    """Split model name into matchable tokens: 'claude-opus-4-6' -> {'claude', 'opus'}"""
+    parts = re.split(r'[-_.\s]+', name.lower())
+    return {p for p in parts if p in _FAMILY_TOKENS}
+
+
+def _best_key(probe_keys: list[str], candidate: str) -> str | None:
+    """Return the probe key that best matches candidate model name by token overlap."""
+    c = candidate.lower()
+    # Exact match first
+    for k in probe_keys:
+        if k.lower() == c:
+            return k
+    # Token overlap matching
+    c_tokens = _tokenize_model(candidate)
+    if not c_tokens:
+        return None
+    best, best_score = None, 0
+    for k in probe_keys:
+        k_tokens = _tokenize_model(k)
+        overlap = len(c_tokens & k_tokens)
+        if overlap > best_score:
+            best, best_score = k, overlap
+    return best if best_score > 0 else None
+
+
+def aggregate(
+    results: list[ProbeResult],
+    probe_weights: dict[str, float],
+    claimed_model: str = "",
+) -> dict[str, float]:
+    """Weighted aggregation. Returns model_id -> confidence 0..1, sorted descending."""
     totals: dict[str, float] = {}
     weight_sum: dict[str, float] = {}
 

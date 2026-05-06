@@ -11,9 +11,25 @@
       contains: ["9.9"]
     gpt-4o-mini:
       contains: ["9.9"]
+    claude-3-opus:
+      contains: ["9.9"]
+    claude-3-sonnet:
+      contains: ["9.9"]
+    claude-3-haiku:
+      pattern: '(9\.9|9\.11)'
     claude-3-5-sonnet:
       contains: ["9.9"]
-    claude-3-opus:
+    claude-3-5-haiku:
+      contains: ["9.9"]
+    claude-sonnet-4:
+      contains: ["9.9"]
+    claude-opus-4:
+      contains: ["9.9"]
+    claude-haiku-4-5:
+      contains: ["9.9"]
+    claude-sonnet-4-6:
+      contains: ["9.9"]
+    claude-opus-4-6:
       contains: ["9.9"]
     gemini-1.5-pro:
       contains: ["9.9"]
@@ -33,10 +49,26 @@
       pattern: '(128k|128,000)'
     gpt-4o-mini:
       pattern: '(128k|128,000)'
-    claude-3-5-sonnet:
-      pattern: '(200k|200,000)'
     claude-3-opus:
       pattern: '(200k|200,000)'
+    claude-3-sonnet:
+      pattern: '(200k|200,000)'
+    claude-3-haiku:
+      pattern: '(200k|200,000)'
+    claude-3-5-sonnet:
+      pattern: '(200k|200,000)'
+    claude-3-5-haiku:
+      pattern: '(200k|200,000)'
+    claude-sonnet-4:
+      pattern: '(200k|200,000)'
+    claude-opus-4:
+      pattern: '(200k|200,000)'
+    claude-haiku-4-5:
+      pattern: '(200k|200,000)'
+    claude-sonnet-4-6:
+      pattern: '(200k|200,000)'
+    claude-opus-4-6:
+      pattern: '(200k|200,000|1M|1,000,000|1 million)'
     gemini-1.5-pro:
       pattern: '(1M|1,000,000|1 million)'
     gemini-2.0-flash:
@@ -53,9 +85,25 @@
       contains: ["5"]
     gpt-4o-mini:
       contains: ["5"]
+    claude-3-opus:
+      contains: ["5"]
+    claude-3-sonnet:
+      contains: ["5"]
+    claude-3-haiku:
+      pattern: '(5|10)'
     claude-3-5-sonnet:
       contains: ["5"]
-    claude-3-opus:
+    claude-3-5-haiku:
+      contains: ["5"]
+    claude-sonnet-4:
+      contains: ["5"]
+    claude-opus-4:
+      contains: ["5"]
+    claude-haiku-4-5:
+      contains: ["5"]
+    claude-sonnet-4-6:
+      contains: ["5"]
+    claude-opus-4-6:
       contains: ["5"]
     gemini-1.5-pro:
       contains: ["5"]
@@ -75,9 +123,27 @@
   expected:
     gpt-4o:
       pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
-    claude-3-5-sonnet:
-      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
     gpt-4o-mini:
       pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
     gpt-3.5-turbo:
       pattern: '.'
+    claude-3-opus:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    claude-3-sonnet:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    claude-3-haiku:
+      pattern: '.'
+    claude-3-5-sonnet:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    claude-3-5-haiku:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    claude-sonnet-4:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    claude-opus-4:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    claude-haiku-4-5:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    claude-sonnet-4-6:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'
+    claude-opus-4-6:
+      pattern: '^\w[\w'']*\s\w[\w'']*\s\w[\w'']*\.?$'

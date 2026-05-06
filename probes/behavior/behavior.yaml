@@ -5,9 +5,25 @@
   weight: 1.8
   prompt: 'List 3 benefits of exercise. Be brief.'
   expected:
+    claude-3-opus:
+      pattern: '(\*\*|1\.)'
+    claude-3-sonnet:
+      pattern: '(\*\*|1\.)'
+    claude-3-haiku:
+      pattern: '(\*\*|1\.|-)'
     claude-3-5-sonnet:
       pattern: '(\*\*|1\.)'
-    claude-3-opus:
+    claude-3-5-haiku:
+      pattern: '(\*\*|1\.|-)'
+    claude-sonnet-4:
+      pattern: '(\*\*|1\.)'
+    claude-opus-4:
+      pattern: '(\*\*|1\.)'
+    claude-haiku-4-5:
+      pattern: '(\*\*|1\.|-)'
+    claude-sonnet-4-6:
+      pattern: '(\*\*|1\.)'
+    claude-opus-4-6:
       pattern: '(\*\*|1\.)'
     gpt-4o:
       pattern: '1\.'
@@ -27,7 +43,25 @@
       contains: ['4']
     gpt-4o:
       contains: ['4']
+    claude-3-opus:
+      contains: ['4']
+    claude-3-sonnet:
+      contains: ['4']
+    claude-3-haiku:
+      contains: ['4']
     claude-3-5-sonnet:
+      contains: ['4']
+    claude-3-5-haiku:
+      contains: ['4']
+    claude-sonnet-4:
+      contains: ['4']
+    claude-opus-4:
+      contains: ['4']
+    claude-haiku-4-5:
+      contains: ['4']
+    claude-sonnet-4-6:
+      contains: ['4']
+    claude-opus-4-6:
       contains: ['4']
     llama-3-70b:
       pattern: '(answer is|= 4|equals 4)'
@@ -37,9 +71,25 @@
   weight: 1.6
   prompt: 'Write a Python function to check if a number is prime. Just the function, no explanation.'
   expected:
+    claude-3-opus:
+      pattern: '(def is_prime\(n: int\)|-> bool)'
+    claude-3-sonnet:
+      pattern: '(def is_prime\(n: int\)|-> bool)'
+    claude-3-haiku:
+      pattern: 'def is_prime'
     claude-3-5-sonnet:
       pattern: '(def is_prime\(n: int\)|-> bool)'
-    claude-3-opus:
+    claude-3-5-haiku:
+      pattern: 'def is_prime'
+    claude-sonnet-4:
+      pattern: '(def is_prime\(n: int\)|-> bool)'
+    claude-opus-4:
+      pattern: '(def is_prime\(n: int\)|-> bool)'
+    claude-haiku-4-5:
+      pattern: '(def is_prime\(n: int\)|-> bool)'
+    claude-sonnet-4-6:
+      pattern: '(def is_prime\(n: int\)|-> bool)'
+    claude-opus-4-6:
       pattern: '(def is_prime\(n: int\)|-> bool)'
     gpt-4o:
       pattern: 'def is_prime'
@@ -53,10 +103,26 @@
   weight: 1.4
   prompt: 'Explain what an API is in one sentence.'
   expected:
-    claude-3-5-sonnet:
-      not_contains: ['**', '##', '```']
     claude-3-opus:
       not_contains: ['**', '##']
+    claude-3-sonnet:
+      not_contains: ['**', '##']
+    claude-3-haiku:
+      not_contains: ['**', '##']
+    claude-3-5-sonnet:
+      not_contains: ['**', '##', '```']
+    claude-3-5-haiku:
+      not_contains: ['**', '##']
+    claude-sonnet-4:
+      not_contains: ['**', '##', '```']
+    claude-opus-4:
+      not_contains: ['**', '##', '```']
+    claude-haiku-4-5:
+      not_contains: ['**', '##']
+    claude-sonnet-4-6:
+      not_contains: ['**', '##', '```']
+    claude-opus-4-6:
+      not_contains: ['**', '##', '```']
     gpt-4o:
       not_contains: ['##', '```']
     gpt-4o-mini:

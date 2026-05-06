@@ -1,5 +1,6 @@
 from openai import OpenAI
 
+
 class ModelClient:
     def __init__(self, base_url: str, api_key: str, model: str):
         self.client = OpenAI(base_url=base_url, api_key=api_key)
@@ -12,4 +13,5 @@ class ModelClient:
             temperature=temperature,
             max_tokens=500
         )
-        return response.choices[0].message.content
+        content = response.choices[0].message.content
+        return content or ""

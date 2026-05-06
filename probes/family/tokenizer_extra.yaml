@@ -12,9 +12,25 @@
       contains: ["14"]
     gpt-4o-mini:
       contains: ["14"]
+    claude-3-opus:
+      contains: ["14"]
+    claude-3-sonnet:
+      contains: ["14"]
+    claude-3-haiku:
+      pattern: '(14|13|15)'
     claude-3-5-sonnet:
       contains: ["14"]
-    claude-3-opus:
+    claude-3-5-haiku:
+      contains: ["14"]
+    claude-sonnet-4:
+      contains: ["14"]
+    claude-opus-4:
+      contains: ["14"]
+    claude-haiku-4-5:
+      contains: ["14"]
+    claude-sonnet-4-6:
+      contains: ["14"]
+    claude-opus-4-6:
       contains: ["14"]
     gemini-1.5-pro:
       contains: ["14"]

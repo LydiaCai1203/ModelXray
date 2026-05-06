@@ -13,9 +13,25 @@
       contains: ["3"]
     gpt-4o-mini:
       contains: ["3"]
+    claude-3-opus:
+      contains: ["3"]
+    claude-3-sonnet:
+      contains: ["3"]
+    claude-3-haiku:
+      pattern: '(2|3)'
     claude-3-5-sonnet:
       contains: ["3"]
-    claude-3-opus:
+    claude-3-5-haiku:
+      contains: ["3"]
+    claude-sonnet-4:
+      contains: ["3"]
+    claude-opus-4:
+      contains: ["3"]
+    claude-haiku-4-5:
+      contains: ["3"]
+    claude-sonnet-4-6:
+      contains: ["3"]
+    claude-opus-4-6:
       contains: ["3"]
     gemini-1.5-pro:
       contains: ["3"]
@@ -31,7 +47,25 @@
       contains: ["ñoñoñoñoñoño"]
     gpt-4o:
       contains: ["ñoñoñoñoñoño"]
+    claude-3-opus:
+      contains: ["ñoñoñoñoñoño"]
+    claude-3-sonnet:
+      contains: ["ñoñoñoñoñoño"]
+    claude-3-haiku:
+      contains: ["ñoñoñoñoñoño"]
     claude-3-5-sonnet:
+      contains: ["ñoñoñoñoñoño"]
+    claude-3-5-haiku:
+      contains: ["ñoñoñoñoñoño"]
+    claude-sonnet-4:
+      contains: ["ñoñoñoñoñoño"]
+    claude-opus-4:
+      contains: ["ñoñoñoñoñoño"]
+    claude-haiku-4-5:
+      contains: ["ñoñoñoñoñoño"]
+    claude-sonnet-4-6:
+      contains: ["ñoñoñoñoñoño"]
+    claude-opus-4-6:
       contains: ["ñoñoñoñoñoño"]
     # Models that fail tokenize ñ differently and produce wrong output
     gpt-4o-mini:
@@ -48,9 +82,25 @@
       contains: ["TPGtahC"]
     gpt-4o-mini:
       contains: ["TPGtahC"]
+    claude-3-opus:
+      contains: ["TPGtahC"]
+    claude-3-sonnet:
+      contains: ["TPGtahC"]
+    claude-3-haiku:
+      pattern: '(TPGtahC|tpgtahc)'
     claude-3-5-sonnet:
       contains: ["TPGtahC"]
-    claude-3-opus:
+    claude-3-5-haiku:
+      contains: ["TPGtahC"]
+    claude-sonnet-4:
+      contains: ["TPGtahC"]
+    claude-opus-4:
+      contains: ["TPGtahC"]
+    claude-haiku-4-5:
+      contains: ["TPGtahC"]
+    claude-sonnet-4-6:
+      contains: ["TPGtahC"]
+    claude-opus-4-6:
       contains: ["TPGtahC"]
     gemini-1.5-pro:
       contains: ["TPGtahC"]
@@ -66,7 +116,25 @@
       contains: ["5"]
     gpt-4o-mini:
       contains: ["5"]
+    claude-3-opus:
+      contains: ["5"]
+    claude-3-sonnet:
+      contains: ["5"]
+    claude-3-haiku:
+      contains: ["5"]
     claude-3-5-sonnet:
+      contains: ["5"]
+    claude-3-5-haiku:
+      contains: ["5"]
+    claude-sonnet-4:
+      contains: ["5"]
+    claude-opus-4:
+      contains: ["5"]
+    claude-haiku-4-5:
+      contains: ["5"]
+    claude-sonnet-4-6:
+      contains: ["5"]
+    claude-opus-4-6:
       contains: ["5"]
     gemini-1.5-pro:
       contains: ["5"]
