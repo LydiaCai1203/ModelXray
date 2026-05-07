@@ -37,6 +37,10 @@
       contains: ["9.9"]
     gemini-1.5-pro:
       contains: ["9.9"]
+    gemini-2.0-flash:
+      contains: ["9.9"]
+    gemini-2.5-pro:
+      contains: ["9.9"]
     llama-3-70b:
       contains: ["9.9"]
     llama-3-8b:
@@ -78,17 +82,19 @@
     claude-haiku-4-5:
       pattern: '(200k|200,000)'
     claude-sonnet-4-6:
-      pattern: '(200k|200,000)'
-    claude-opus-4-6:
-      pattern: '(200k|200,000|1M|1,000,000|1 million)'
-    gemini-1.5-pro:
       pattern: '(1M|1,000,000|1 million)'
+    claude-opus-4-6:
+      pattern: '(1M|1,000,000|1 million)'
+    gemini-1.5-pro:
+      pattern: '(1M|1,000,000|1 million|2M|2,000,000)'
     gemini-2.0-flash:
       pattern: '(1M|1,000,000)'
+    gemini-2.5-pro:
+      pattern: '(1M|1,000,000|2M|2,000,000|1 million)'
     kimi-k2.5:
-      pattern: '(256k|256,000|256K)'
+      pattern: '(128k|128,000)'
     kimi-k2.6:
-      pattern: '(256k|256,000|256K)'
+      pattern: '(128k|128,000)'
 
 - id: version_reasoning_depth
   category: version
